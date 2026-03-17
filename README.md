@@ -1,36 +1,17 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Both datasets are from the Elexon BMRS API. No API key required. Data is scoped to fuelType=WIND and January 2024 only.
 
-## Getting Started
+Notebooks
+Two Jupyter notebooks are included in the notebooks/ directory:
+forecast_error_analysis.ipynb
+Analyses error characteristics of the WINDFOR forecast model: mean, median, p99 error, error variation by forecast horizon, and error by time of day.
+wind_reliability.ipynb
+Analyses historical actual wind generation to recommend how many MW of wind power can be reliably expected to meet electricity demand, with supporting statistical evidence.
 
-First, run the development server:
+AI Tools
+Claude (Anthropic) was used to assist with building this application, specifically for scaffolding the Next.js project structure, debugging the Elexon API parameter issues, writing the seed script, and implementing the Recharts chart component. All core logic (horizon filter algorithm, SQL query design, data analysis approach in notebooks) was designed and reasoned through independently.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Notes
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+All timestamps are handled in UTC throughout the app. The X axis, inputs, and tooltip all display UTC times explicitly.
+Forecast data from WINDFOR is hourly resolution, while actuals are every 30 minutes. Every :30 slot will have no forecast match. This is expected and reflected in the "Missing forecast" stat.
+The date inputs are locked to January 2024 since that is the only month seeded in the database.
