@@ -102,8 +102,8 @@ export default function WindChart({ data, loading }: Props) {
                 "dd MMM yyyy HH:mm",
               ) + " UTC"
             }
-            formatter={(value: number | null, name: string) => [
-              value != null ? `${value.toFixed(0)} MW` : "No data",
+            formatter={(value, name) => [
+              value != null ? `${Number(value).toFixed(0)} MW` : "No data",
               name === "actual" ? "Actual generation" : "Forecast",
             ]}
           />
